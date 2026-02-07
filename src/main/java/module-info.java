@@ -7,7 +7,10 @@ module org.example.password_generator_gui {
     requires com.dlsc.formsfx;
     requires net.synedra.validatorfx;
     requires org.kordamp.bootstrapfx.core;
+    requires passay;
 
-    opens org.example.password_generator_gui to javafx.fxml;
-    exports org.example.password_generator_gui;
+    opens org.password_generator to javafx.fxml;
+    exports org.password_generator;
+    exports GUI;
+    opens GUI to javafx.fxml;
 }

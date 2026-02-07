@@ -1,11 +1,6 @@
-package org.example.password_generator_gui;
+package org.password_generator;
 
-import java.util.ArrayList;
-
-import org.passay.CharacterRule;
-import org.passay.EnglishCharacterData;
 import org.passay.PasswordGenerator;
-import org.passay.Rule;
 
 public class PasswordBuilder {
     PasswordConfiguration config;
