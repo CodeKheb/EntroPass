@@ -18,6 +18,5 @@ public class PasswordConfiguration {
         else {rules.add(new CharacterRule(EnglishCharacterData.LowerCase));}
     }
 
-
     public ArrayList<Rule> getRules() {return rules;}
 }

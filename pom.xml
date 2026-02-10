@@ -88,6 +88,11 @@
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+        <groupId>org.passay</groupId>
+        <artifactId>passay</artifactId>
+        <version>1.6.6</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -110,7 +115,7 @@
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>
-                                org.example.password_generator_gui/org.example.password_generator_gui.Application
+                                org.example.password_generator_gui/GUI.Application
                             </mainClass>
                             <options>
                                 <option>--add-exports=java.base/sun.misc=ALL-UNNAMED</option>
