@@ -8,9 +8,14 @@ module org.example.password_generator_gui {
     requires net.synedra.validatorfx;
     requires org.kordamp.bootstrapfx.core;
     requires passay;
+    requires java.sql;
+    requires bcrypt;
+    requires jbcrypt;
 
     opens org.password_generator to javafx.fxml;
     exports org.password_generator;
     exports GUI;
     opens GUI to javafx.fxml;
+    exports Database;
+    opens Database to javafx.fxml;
 }
