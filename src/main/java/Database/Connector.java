@@ -1,32 +1,22 @@
 package Database;
 
-import org.mindrot.jbcrypt.BCrypt;
-
 import java.sql.Connection;
-import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class Connector {
-    public static void main(String[] args) {
-        String url = "jdbc:sqlite:C:/Users/Wren/IdeaProjects/Password_Generator_GUI/DataBase";
-        Connection connection = null;
-        try {
-            connection = DriverManager.getConnection(url);
-            System.out.println("Opened database connection!");
+    public static void insertPassword(int id, String serviceName, String userName, String password, String notes, String createdDate) throws SQLException {
+        Connection connection = DatabaseManager.getInstance().getConnection();
+        String insertSQL = "INSERT INTO passwords(id, service_name, username, encrypted_password, notes, created_date) VALUES(?,?,?,?,?,?)";
+        PreparedStatement preparedStatement = connection.prepareStatement(insertSQL);
+        preparedStatement.setInt(1, id);
+        preparedStatement.setString(2, serviceName);
+        preparedStatement.setString(3, userName);
+        preparedStatement.setString(4, password);
+        preparedStatement.setString(5, notes);
+        preparedStatement.setString(6, createdDate);
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (connection != null) {
-                    connection.close(); //Ensures connection is closed
-                }
-            } catch (SQLException ex) {
-                System.out.println(ex.getMessage());
-            }
-        }
-    }
-    public static String hashPassword(String Password) {
-        return BCrypt.hashpw(Password, BCrypt.gensalt(12));
+        preparedStatement.executeUpdate();
+        preparedStatement.close();
     }
 }
