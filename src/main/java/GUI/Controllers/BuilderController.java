@@ -3,8 +3,6 @@ package GUI.Controllers;
 import Database.PasswordHasher;
 import Database.UserRepository;
 import GUI.Application;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,10 +15,19 @@ import org.password_generator.Builder;
 import org.password_generator.Configurator;
 import org.password_generator.StrengthChecker;
 
+// Source - https://stackoverflow.com/a/74555584
+// Posted by Mustafa Poya
+// Retrieved 2026-03-06, License - CC BY-SA 4.0
+
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
+
 import java.io.IOException;
 import java.sql.SQLException;
 
 public class BuilderController {
+    @FXML
+    private Button copyButton;
     @FXML
     private ProgressBar strengthIndicator;
     @FXML
@@ -57,12 +64,9 @@ public class BuilderController {
             });
         }
 
-        passwordLengthSlider.valueProperty().addListener(new ChangeListener<>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observableValue, Number number, Number newValue) {
-                if (newValue != null) {
-                    passLength.setText(String.valueOf(newValue.intValue()));
-                }
+        passwordLengthSlider.valueProperty().addListener((_, _, newValue) -> {
+            if (newValue != null) {
+                passLength.setText(String.valueOf(newValue.intValue()));
             }
         });
 
@@ -89,12 +93,14 @@ public class BuilderController {
             int passwordLength = getPasswordLength();
             setPassword(passwordLength, configuration);
             setPasswordStrength(configuration, passwordLength);
+            copyButton.setText("copy to clipboard");
         }
         catch (NumberFormatException e) {
             passwordText.setText("Please enter a valid number");
         }
     }
 
+    @FXML
     private void setPassword(int passwordLength, Configurator configuration) {
         Builder builder = new Builder(passwordLength);
         String password = builder.buildPassword(configuration);
@@ -109,6 +115,7 @@ public class BuilderController {
         }
     }
 
+    @FXML
     private void setPasswordStrength(Configurator configuration, int passwordLength) {
         double strength = StrengthChecker.getStrength(configuration, passwordLength);
 
@@ -117,9 +124,7 @@ public class BuilderController {
                 checkStrength(strength)
         );
 
-        strengthIndicator.setProgress(StrengthChecker.getNormalStrength(strength));
-        System.out.println("initial Strength: " + strength);
-        System.out.println(StrengthChecker.getNormalStrength(strength));
+        strengthIndicator.setProgress(strength);
     }
 
     @FXML
@@ -130,7 +135,19 @@ public class BuilderController {
         passwordText.setText("Password Saved Successfully!");
     }
 
-    //Getter Methods.
+    @FXML
+    private void copyToClipboard() {
+        Clipboard clipboard = Clipboard.getSystemClipboard();
+        ClipboardContent content = new ClipboardContent();
+
+        content.putString(passwordText.getText());
+        clipboard.setContent(content);
+
+        copyButton.setText("Copied to Clipboard!");
+    }
+
+
+    //Getter Methods
     private int getPasswordLength() {return Integer.parseInt(passLength.getText());}
     private String getUsername() {
         if (usernameField == null) {

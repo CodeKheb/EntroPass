@@ -11,10 +11,9 @@ public class StrengthChecker {
     private final static int MIXED_CASE_POOL_SIZE = 52;
     private final static int LOWER_CASE_POOL_SIZE = 26;
 
-    private final static int VERY_STRONG_THRESHOLD = 325;
-    private final static int STRONG_THRESHOLD = 100;
-    private final static int MEDIUM_THRESHOLD = 72;
-    private final static int WEAK_THRESHOLD = 44;
+    private final static double VERY_STRONG_THRESHOLD = 0.75;
+    private final static double STRONG_THRESHOLD = 0.50;
+    private final static double MEDIUM_THRESHOLD = 0.25;
 
     private final static double MIN_ENTROPY = 37.60351774512874;
     private final static double MAX_ENTROPY = 419.4936865073688;
@@ -44,19 +43,14 @@ public class StrengthChecker {
         if (config.hasMixedCase()) charPoolSize += MIXED_CASE_POOL_SIZE;
         else charPoolSize += LOWER_CASE_POOL_SIZE;
 
-        return passwordLength * log2(charPoolSize);
+        double initialEntropy = passwordLength * log2(charPoolSize);
+        return (initialEntropy - MIN_ENTROPY)/(MAX_ENTROPY - MIN_ENTROPY);
     }
-
-    public static double getNormalStrength(double initialStrength) {
-        return (initialStrength - MIN_ENTROPY)/(MAX_ENTROPY - MIN_ENTROPY);
-    }
-
     public static String checkStrength(double strength) {
         if (strength >= VERY_STRONG_THRESHOLD) return "Very Strong";
         else if (strength >= STRONG_THRESHOLD) return "Strong";
         else if (strength >= MEDIUM_THRESHOLD) return "Medium";
-        else if (strength >= WEAK_THRESHOLD) return "Weak";
-        else return "Very Weak";
+        else return "Weak";
     }
 
     /**
