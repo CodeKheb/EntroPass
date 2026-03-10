@@ -32,9 +32,6 @@ public class Vault implements Initializable {
     @FXML
     private TableView<UserRepository> table;
 
-    ObservableList<UserRepository> initialData() {
-        UserRepository repo1 = new UserRepository();
-    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -44,7 +41,6 @@ public class Vault implements Initializable {
         notes.setCellValueFactory(new PropertyValueFactory<UserRepository, String>("notes"));
         createdDate.setCellValueFactory(new PropertyValueFactory<UserRepository, String>("createdDate"));
 
-        table.setItems();
     }
 }
 

@@ -2,6 +2,7 @@ package Database;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.*;
 
@@ -36,6 +37,16 @@ public class UserRepository {
     }
 
     //TODO: Code removePassword() method.
+
+    public void retrievePassword() throws SQLException {
+        Connection connection = DatabaseManager.getInstance().getConnection();
+
+        String retrieveSQL = "SELECT service_name, username, encrypted_password, notes, created_date FROM passwords";
+        PreparedStatement preparedStatement = connection.prepareStatement(retrieveSQL);
+        ResultSet rs = preparedStatement.executeQuery(); //Executes the query in SQLite
+
+
+    }
 
     public LocalDate getCreatedDate() {
         return createdDate;

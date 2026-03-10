@@ -6,7 +6,7 @@ import java.sql.*;
 public class DatabaseManager {
     private static DatabaseManager instance;
     private Connection connection;
-    private static final String DB_PATH = "src/main/resources/data/PasswordDataBase.sqlite";
+    private static final String DB_PATH = "src/main/resources/org/data/PasswordDataBase.sqlite";
 
     public  DatabaseManager() {
         try {
