@@ -12,8 +12,8 @@ module org.example.password_generator_gui {
     requires bcrypt;
     requires jbcrypt;
 
-    opens org.password_generator to javafx.fxml;
-    exports org.password_generator;
+    opens org.Password_Generator to javafx.fxml;
+    exports org.Password_Generator;
     exports GUI;
     opens GUI to javafx.fxml;
     exports Database;

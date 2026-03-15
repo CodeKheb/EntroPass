@@ -1,4 +1,4 @@
-package org.password_generator;
+package org.Password_Generator;
 
 /**
  * Class that evaluates a given password's strength.
@@ -24,16 +24,15 @@ public class StrengthChecker {
      * <br><br>
      * It calculates the total entropy of the generated password in bits
      * and evaluates the bitSize with different thresholds where it should at least be <b>72</b> bits to be considered a viable password.
+     * <br><br>
+     * After calculating the entropy of the generated password in bits. Now, using <b>Normalization Formula,</b>
+     * or <b>(initialValue - lowest possible entropy value)/(highest possible entropy value - lowest possible entropy value)</b>
+     * it is then translated into a <b>Normal Value</b> where it is rated from 0 to 1
+     *
      *
      * @param config if the password were to have a digit, special character, or a capital letter.
      * @param passwordLength the length of the password
-     * @return
-     * <list>
-     *       <ul><b>"Strong"</b></ul>
-     *       <ul><b>"Medium"</b></ul>
-     *       <ul><b>"Weak"</b></ul>
-     *       <ul><b>"Very Weak"</b></ul>
-     * </list>
+     * @return a <b>Normalized</b> value of the strength of the password from 0 to 1
      */
     public static double getStrength(Configurator config, int passwordLength) {
         int charPoolSize = 0;
@@ -46,6 +45,12 @@ public class StrengthChecker {
         double initialEntropy = passwordLength * log2(charPoolSize);
         return (initialEntropy - MIN_ENTROPY)/(MAX_ENTROPY - MIN_ENTROPY);
     }
+
+    /**
+     * Interprets the <b>Descriptive Strength</b> of the password based on the thresholds.
+     * @param strength the numerical strength of the password from 0 to 1
+     * @return a descriptive interpretation of the strength of the password based on the threshold
+     */
     public static String checkStrength(double strength) {
         if (strength >= VERY_STRONG_THRESHOLD) return "Very Strong";
         else if (strength >= STRONG_THRESHOLD) return "Strong";

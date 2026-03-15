@@ -17,7 +17,7 @@ public class DatabaseManager {
     private static final String DB_PATH = "src/main/resources/org/data/PasswordDataBase.sqlite"; //follow this path structure when making your own database
 
     /**
-     *
+     * Simple constructor to connect a class to the database file
      */
     public  DatabaseManager() {
         try {
@@ -35,6 +35,9 @@ public class DatabaseManager {
         }
     }
 
+    /**
+     * @return an instance of the connection
+     */
     public static DatabaseManager getInstance() {
         if (instance == null) {
             instance = new DatabaseManager();
@@ -42,8 +45,15 @@ public class DatabaseManager {
         return instance;
     }
 
+    /**
+     * @return connects the instance of the connector to the database
+     */
     public Connection getConnection() {return connection;}
 
+    /**
+     * Closes the connection of the application to the database with an additional log of the database connection closure.
+     * Shall only be used when closing the application to prevent premature database connection closure
+     */
     public void closeConnection() {
         try {
             if (connection != null && !connection.isClosed()) {

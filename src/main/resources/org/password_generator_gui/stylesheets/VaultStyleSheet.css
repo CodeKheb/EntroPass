@@ -1,0 +1,15 @@
+.list-cell:filled:selected {
+    -fx-background-color: #D1EBD8FF; /* Use your desired color or hex code */
+    -fx-text-fill: white;
+}
+
+.list-cell:filled:hover {
+    -fx-background-color: #cfded2;
+}
+.list-cell:filled:selected .text {
+    -fx-fill: white;
+}
+.list-view:focused .list-cell:filled:selected {
+    -fx-background-color: #D1EBD8FF; /* A different color for unfocused state */
+}
+

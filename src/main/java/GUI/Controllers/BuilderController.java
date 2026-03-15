@@ -10,14 +10,10 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import org.password_generator.Configurator;
-import org.password_generator.StrengthChecker;
+import org.Password_Generator.Configurator;
+import org.Password_Generator.StrengthChecker;
 
-// Source - https://stackoverflow.com/a/74555584
-// Posted by Mustafa Poya
-// Retrieved 2026-03-06, License - CC BY-SA 4.0
 
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
@@ -51,6 +47,9 @@ public class BuilderController {
     @FXML
     private Label passwordStrength;
 
+    /**
+     *
+     */
     @FXML
     private void initialize() {
         if (passLength != null) {
@@ -73,6 +72,12 @@ public class BuilderController {
         strengthIndicator.setStyle("-fx-accent: #64ED86;");
     }
 
+    /**
+     * Method that handles the scene switch from the current password generator scene
+     * to the main menu scene.
+     * @param event the event of pressing the {@code back button}
+     * @throws IOException an unexpected event in the input
+     */
     @FXML
     public void switchToMenuScene(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("/org/password_generator_gui/Scenes/StartingMenu.fxml"));
@@ -83,12 +88,14 @@ public class BuilderController {
         stage.show();
     }
 
-
+    /**
+     * This method handles the action of pressing the {@code Generate Password} button./
+     */
     @FXML
     private void generatePassword() {
         Configurator configuration = new Configurator(numberCheckBox.isSelected(), specialCharCheckBox.isSelected(), mixedCaseCheckBox.isSelected());
         try {
-            if (getPasswordLength() < 8 || getPasswordLength() > 128) passwordText.setText("Length must be between 8 and 128 characters!");
+            if (getPasswordLength() < 8 || getPasswordLength() > 64) passwordText.setText("Length must be between 8 and 64 characters!");
 
             int passwordLength = getPasswordLength();
             setPassword(passwordLength, configuration);
@@ -102,7 +109,7 @@ public class BuilderController {
 
     @FXML
     private void setPassword(int passwordLength, Configurator configuration) {
-        org.password_generator.Builder builder = new org.password_generator.Builder(passwordLength);
+        org.Password_Generator.Builder builder = new org.Password_Generator.Builder(passwordLength);
         String password = builder.buildPassword(configuration);
         passwordText.setText(password);
 
@@ -132,10 +139,20 @@ public class BuilderController {
     @FXML
     private void savePassword() throws SQLException {
         UserOperations newRepo = new UserOperations(getServiceName(), getUsername(), getHashedPassword(), getNote());
-        newRepo.insertPassword();
+        boolean invalidServiceName = serviceNameField.getText().isEmpty();
+        boolean invalidUserName = usernameField.getText().isEmpty();
 
-        passwordText.setStyle("-fx-font-size: 18");
-        passwordText.setText("Password Saved Successfully!");
+        if (invalidServiceName) {
+            serviceNameField.setText("This field is required!");
+        }
+        if (invalidUserName) {
+            usernameField.setText("This field is required!");
+        }
+        if (!invalidUserName && !invalidServiceName){
+            newRepo.insertPassword();
+            passwordText.setStyle("-fx-font-size: 18");
+            passwordText.setText("Password Saved Successfully!");
+        }
     }
 
     @FXML
@@ -152,22 +169,10 @@ public class BuilderController {
 
     //Getter Methods
     private int getPasswordLength() {return Integer.parseInt(passLength.getText());}
-    private String getUsername() {
-        if (usernameField == null) {
-            return "";
-        }
-        return usernameField.getText();
-    }
-    private String getServiceName() {
-        if (serviceNameField == null) {
-            return "";
-        }
-        return serviceNameField.getText();
-    }
+    private String getUsername() {return usernameField.getText();}
+    private String getServiceName() {return serviceNameField.getText();}
     private String getNote() {
-        if (noteField == null) {
-            return "";
-        }
+        if (noteField.getText().isEmpty()) return "";
         return noteField.getText();
     }
     private String getHashedPassword() {return PasswordHasher.hashPassword(passwordText.getText());}

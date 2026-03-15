@@ -76,6 +76,7 @@ public class VaultController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         userRepoList.setCellFactory(lv -> new VaultEntryCell());
         userRepoList.getItems().addAll(userDAO.loadRepoData());
 

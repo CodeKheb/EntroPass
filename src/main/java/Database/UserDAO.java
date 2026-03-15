@@ -7,7 +7,26 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * User DAO(Data Access Object) which is used to retrieve data from the database <b>PasswordDB</b>.
+ * <ul>retrieving data such as:
+ *      <li>User repository data from the {@link User}</li>
+ *      <li>The number of rows in the database</li>
+ * </ul>
+ */
 public class UserDAO {
+    /**
+     * Method used to access the database and retrieve necessary entries
+     * in the password creation process that was saved.
+     *
+     * @return <ul> A list of the following data:
+     *          <li>The password's service name (e.g. Spotify, Youtube, Netflix)</li>
+     *          <li>The username</li>
+     *          <li>The password (encrypted and is about to be decrypted)</li>
+     *          <li>Optional notes (e.g. answers for security questions)</li>
+     *          <li>The creation date</li>
+     *      </ul>
+     */
     public List<User> loadRepoData() {
         List<User> dataVault = new ArrayList<>();
 
@@ -32,6 +51,10 @@ public class UserDAO {
         return dataVault;
     }
 
+    /**
+     * Method that accesses the database and counts the number of existing entries/rows
+     * @return a count of the row entries in the database
+     */
     public int getRowCount() {
         String query = "SELECT COUNT(*) FROM passwordDB";
         Connection connection = DatabaseManager.getInstance().getConnection();

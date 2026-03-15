@@ -1,4 +1,4 @@
-package org.password_generator;
+package org.Password_Generator;
 
 import java.util.ArrayList;
 import java.util.Collections;
