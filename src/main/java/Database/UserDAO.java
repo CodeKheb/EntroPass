@@ -30,12 +30,15 @@ public class UserDAO {
     public List<User> loadRepoData() {
         List<User> dataVault = new ArrayList<>();
 
+        //Prepares the query
         String query = "SELECT service_name, username, encrypted_password, notes, created_date FROM passwordDB";
 
+        //Establish a connection with the database
         Connection connection = DatabaseManager.getInstance().getConnection();
         try (Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery(query)){
 
+            //Loops through the rows, adding a user object to the dataVault list for every table row.
             while (rs.next()) {
                 dataVault.add(new User(
                         rs.getString("service_name"),

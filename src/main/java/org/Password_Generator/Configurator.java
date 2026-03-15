@@ -39,9 +39,7 @@ public class Configurator {
     /**
      * @return A copy of the configuration list
      */
-    public List<Rule> getRules() {
-        return Collections.unmodifiableList(rules);
-    }
+    public List<Rule> getRules() {return Collections.unmodifiableList(rules);}
 
     //Getter methods for each boolean.
     public boolean hasDigit() {return hasDigit;}

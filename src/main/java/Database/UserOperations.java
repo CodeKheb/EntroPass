@@ -39,10 +39,10 @@ public class UserOperations {
         //Establishes a connection first
         Connection connection = DatabaseManager.getInstance().getConnection();
 
-        //Declare the database query with the following attributes about to be inserted with placeholders
+        //Declare the database query with placeholders
         String insertSQL = "INSERT INTO passwordDB(service_name, username, encrypted_password, notes, created_date) VALUES(?,?,?,?,?)";
 
-        //Prepares the query execution with the necessary values being inputted.
+        //Prepares the query execution with the necessary parameters.
         PreparedStatement preparedStatement = connection.prepareStatement(insertSQL);
         preparedStatement.setString(1, serviceName);
         preparedStatement.setString(2, userName);

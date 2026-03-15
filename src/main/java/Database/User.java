@@ -7,9 +7,6 @@ import javafx.beans.property.SimpleStringProperty;
  * to be retrieved by the {@link UserDAO}
  */
 public class User {
-    // Source - https://stackoverflow.com/q/34823563
-    // Posted by Joseph, I modified it to fit my project.
-    // Retrieved 2026-03-11, License - CC BY-SA 3.0
     private final SimpleStringProperty serviceName;
     private final SimpleStringProperty userName;
     private final SimpleStringProperty password;

@@ -1,23 +1,11 @@
 package org.Password_Generator;
 
 /**
- * Class that evaluates a given password's strength.
+ * Evaluates a given password's strength.
  * Uses the <b>Password Entropy Formula</b> to calculate the password's Strength.
  * <br><br>
  */
 public class StrengthChecker {
-    private final static int DIGIT_POOL_SIZE = 10;
-    private final static int SPECIAL_CHAR_POOL_SIZE = 32;
-    private final static int MIXED_CASE_POOL_SIZE = 52;
-    private final static int LOWER_CASE_POOL_SIZE = 26;
-
-    private final static double VERY_STRONG_THRESHOLD = 0.75;
-    private final static double STRONG_THRESHOLD = 0.50;
-    private final static double MEDIUM_THRESHOLD = 0.25;
-
-    private final static double MIN_ENTROPY = 37.60351774512874;
-    private final static double MAX_ENTROPY = 419.4936865073688;
-
     /**
      * Computes and interprets the generated password's strength.
      * Using the <b>Password Entropy Formula</b> or <b>(passwordLength)*(Log2(charPoolSize))</b>.
@@ -37,6 +25,14 @@ public class StrengthChecker {
     public static double getStrength(Configurator config, int passwordLength) {
         int charPoolSize = 0;
 
+        final int DIGIT_POOL_SIZE = 10;
+        final int SPECIAL_CHAR_POOL_SIZE = 32;
+        final int MIXED_CASE_POOL_SIZE = 52;
+        final int LOWER_CASE_POOL_SIZE = 26;
+
+        final double MIN_ENTROPY = 37.60351774512874;
+        final double MAX_ENTROPY = 419.4936865073688;
+
         if (config.hasDigit()) charPoolSize += DIGIT_POOL_SIZE;
         if (config.hasSpecialChar()) charPoolSize += SPECIAL_CHAR_POOL_SIZE;
         if (config.hasMixedCase()) charPoolSize += MIXED_CASE_POOL_SIZE;
@@ -52,6 +48,10 @@ public class StrengthChecker {
      * @return a descriptive interpretation of the strength of the password based on the threshold
      */
     public static String checkStrength(double strength) {
+        final double VERY_STRONG_THRESHOLD = 0.75;
+        final double STRONG_THRESHOLD = 0.50;
+        final double MEDIUM_THRESHOLD = 0.25;
+
         if (strength >= VERY_STRONG_THRESHOLD) return "Very Strong";
         else if (strength >= STRONG_THRESHOLD) return "Strong";
         else if (strength >= MEDIUM_THRESHOLD) return "Medium";
