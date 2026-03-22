@@ -14,13 +14,14 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class AuthenticatorController {
 
     @FXML
-    private TextField AuthTextField;
+    private PasswordField AuthTextField;
 
     @FXML
     private Label validatorLabel;
