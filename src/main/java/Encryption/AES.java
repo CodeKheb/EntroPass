@@ -3,20 +3,18 @@ package Encryption;
 
 import javax.crypto.*;
 import javax.crypto.spec.GCMParameterSpec;
-import javax.crypto.spec.SecretKeySpec;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 import java.util.Base64;
 
-public class PasswordEncrypt {
+public class AES {
     private static SecretKey key;
     private static final int KEY_LENGTH = 128;
     private static final int T_LEN = 128;
 
+    //Static initializer making user the key is made.
     static {
-        // Initialize the key when the class is loaded
         init();
     }
 
@@ -31,6 +29,7 @@ public class PasswordEncrypt {
     }
 
     public static String encrypt(String password) {
+        //Checks if the key exists in the first place.
         if (key == null) {
             init();
         }
@@ -41,13 +40,15 @@ public class PasswordEncrypt {
         try {
             Cipher encryptionCipher = Cipher.getInstance("AES/GCM/NoPadding");
             encryptionCipher.init(Cipher.ENCRYPT_MODE, key);
+
             byte[] iv = encryptionCipher.getIV();
             encryptionByte = encryptionCipher.doFinal(passwordInByte);
             
-            // Combine IV and encrypted data
+            // Combine IV and encrypted password to prevent duplicate cyphertext if encrypting the same password twice.
             byte[] combined = new byte[iv.length + encryptionByte.length];
-            System.arraycopy(iv, 0, combined, 0, iv.length);
-            System.arraycopy(encryptionByte, 0, combined, iv.length, encryptionByte.length);
+
+            System.arraycopy(iv, 0, combined, 0, iv.length); //inserts the iv bytes to the combined array
+            System.arraycopy(encryptionByte, 0, combined, iv.length, encryptionByte.length); //inserts the encryption bytes to the combined array
             
             return encode(combined);
         } catch (NoSuchAlgorithmException | NoSuchPaddingException |
@@ -58,19 +59,21 @@ public class PasswordEncrypt {
     }
 
     public static String decrypt(String encryptedPassword) {
+        //Check if the key exists in the first place
         if (key == null) {
             init();
         }
         
-        byte[] combined = decode(encryptedPassword);
+        byte[] combined = decode(encryptedPassword); //encrypted password string to a byte array.
         byte[] decryptedBytes;
 
         try {
             // Extract IV and encrypted data
             byte[] iv = new byte[12]; // GCM standard IV size
-            byte[] encryptedData = new byte[combined.length - iv.length];
-            System.arraycopy(combined, 0, iv, 0, iv.length);
-            System.arraycopy(combined, iv.length, encryptedData, 0, encryptedData.length);
+            byte[] encryptedData = new byte[combined.length - iv.length]; //make a new byte array with the size of the encrypted data only (by removing iv size)
+
+            System.arraycopy(combined, 0, iv, 0, iv.length); //Extracts the iv array from the combined array
+            System.arraycopy(combined, iv.length, encryptedData, 0, encryptedData.length); //extracts the encrypted data from the combined array
             
             Cipher decryptionCipher = Cipher.getInstance("AES/GCM/NoPadding");
             GCMParameterSpec spec = new GCMParameterSpec(T_LEN, iv);
@@ -81,7 +84,7 @@ public class PasswordEncrypt {
                  IllegalBlockSizeException | BadPaddingException e) {
             throw new RuntimeException(e);
         }
-        return new String(decryptedBytes);
+        return new String(decryptedBytes); //return decrypted bytes into a string form
     }
 
     private static String encode(byte[] data) {return Base64.getEncoder().encodeToString(data);}

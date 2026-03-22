@@ -1,7 +1,7 @@
 package GUI.Controllers;
 
 import Database.UserOperations;
-import Encryption.PasswordEncrypt;
+import Encryption.AES;
 import GUI.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -143,10 +143,10 @@ public class BuilderController {
         boolean invalidUserName = usernameField.getText().isEmpty();
 
         if (invalidServiceName) {
-            serviceNameField.setText("This field is required!");
+            serviceNameField.setPromptText("This field is required!");
         }
         if (invalidUserName) {
-            usernameField.setText("This field is required!");
+            usernameField.setPromptText("This field is required!");
         }
         if (!invalidUserName && !invalidServiceName){
             newRepo.insertPassword();
@@ -175,5 +175,5 @@ public class BuilderController {
         if (noteField.getText().isEmpty()) return "";
         return noteField.getText();
     }
-    private String getEncryptedPassword() {return PasswordEncrypt.encrypt(passwordText.getText());}
+    private String getEncryptedPassword() {return AES.encrypt(passwordText.getText());}
 }

@@ -17,10 +17,9 @@ public class Application extends javafx.application.Application {
         try {
             DatabaseManager.getInstance();
 
-            FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("/org/password_generator_gui/Scenes/StartingMenu.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("/org/password_generator_gui/Scenes/AuthMenu.fxml"));
             Region root = fxmlLoader.load();
             Scene scene = new Scene(root);
-            //scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/org/password_generator_gui/stylesheets/AuthStyleSheet.css")).toExternalForm());
             stage.setTitle("EntroPass 0.67");
             stage.setScene(scene);
             stage.show();

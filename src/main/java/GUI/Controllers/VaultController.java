@@ -1,14 +1,12 @@
 package GUI.Controllers;
 
 import Database.*;
-import Encryption.PasswordEncrypt;
+import Encryption.AES;
 import GUI.Application;
 import GUI.views.VaultEntryCell;
 
 import java.io.IOException;
-import java.sql.SQLException;
 
-import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -25,7 +23,6 @@ import javafx.scene.input.ClipboardContent;
 import javafx.stage.Stage;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.util.Duration;
 
 import java.net.URL;
 import java.util.Objects;
@@ -98,7 +95,14 @@ public class VaultController implements Initializable {
     private void populateDetail(User user) {
         serviceName.setText(user.getServiceName());
         userName.setText(user.getUserName());
-        password.setText(PasswordEncrypt.decrypt(user.getPassword()));
+
+        try {
+            password.setText(AES.decrypt(user.getPassword()));
+        } catch (RuntimeException e) {
+            password.setText("[Legacy Password - Bicrypt was used in this entry]");
+            password.setStyle("-fx-text-fill: #FF6B6B;");
+        }
+
         notes.setText(user.getNotes());
         createdDate.setText(user.getCreatedDate());
     }
