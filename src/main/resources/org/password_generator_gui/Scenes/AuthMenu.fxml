@@ -8,6 +8,7 @@
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
@@ -15,78 +16,92 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="553.0" prefWidth="389.0" stylesheets="@../stylesheets/AuthStyleSheet.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controllers.AuthenticatorController">
-   <center>
-      <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0" BorderPane.alignment="CENTER">
-         <children>
-            <Group>
+<AnchorPane prefHeight="901.0" prefWidth="1230.0" style="-fx-background-color: gray;" styleClass="root-pane" stylesheets="@../stylesheets/AuthStyleSheet.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controllers.AuthenticatorController">
+   <children>
+      <BorderPane layoutX="400.0" layoutY="155.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="592.0" prefWidth="431.0" styleClass="auth-box" stylesheets="@../stylesheets/AuthStyleSheet.css">
+         <center>
+            <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0" BorderPane.alignment="CENTER">
                <children>
-                  <Circle fill="#63c94c" radius="33.0" stroke="WHITE" strokeLineCap="ROUND" strokeType="INSIDE" strokeWidth="0.0" />
-                  <ImageView fitHeight="78.0" fitWidth="79.0" layoutX="-39.0" layoutY="-39.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../Icons/Images/FingerPrint.png" />
-                     </image>
-                  </ImageView>
-               </children>
-            </Group>
-            <Label text="Unlock Vault">
-               <font>
-                  <Font name="Segoe UI Bold" size="20.0" />
-               </font>
-            </Label>
-            <Label prefHeight="36.0" prefWidth="316.0" text="Welcome back. Please authenticate to access your super very secret data" textAlignment="CENTER" wrapText="true">
-               <font>
-                  <Font name="Segoe UI" size="14.0" />
-               </font>
-               <VBox.margin>
-                  <Insets bottom="-10.0" />
-               </VBox.margin>
-            </Label>
-            <Group />
-            <Pane prefHeight="111.0" prefWidth="419.0">
-               <children>
-                  <Label layoutX="21.0" text="MASTER PASSWORD">
+                  <Group>
+                     <children>
+                        <Circle fill="#6dab5d" radius="33.0" stroke="WHITE" strokeLineCap="ROUND" strokeType="INSIDE" strokeWidth="0.0" />
+                        <ImageView fitHeight="78.0" fitWidth="79.0" layoutX="-39.0" layoutY="-39.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Icons/Images/FingerPrint.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Group>
+                  <Label text="Unlock Vault" textFill="WHITE">
                      <font>
-                        <Font name="Segoe UI Bold" size="12.0" />
+                        <Font name="Segoe UI Bold" size="20.0" />
                      </font>
                   </Label>
-                  <CheckBox alignment="CENTER" contentDisplay="TOP" graphicTextGap="6.0" layoutX="20.0" layoutY="81.0" mnemonicParsing="false" text="Remember session" />
-                  <PasswordField fx:id="AuthTextField" layoutX="19.0" layoutY="24.0" prefHeight="47.0" prefWidth="352.0" promptText="Enter your key">
+                  <Label prefHeight="36.0" prefWidth="316.0" text="Welcome back. Please authenticate to access your super very secret data" textAlignment="CENTER" textFill="#c3c3c3" wrapText="true">
                      <font>
-                        <Font name="Segoe UI" size="16.0" />
+                        <Font name="Segoe UI" size="14.0" />
                      </font>
-                  </PasswordField>
+                     <VBox.margin>
+                        <Insets bottom="-10.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Group />
+                  <Pane prefHeight="111.0" prefWidth="419.0">
+                     <children>
+                        <Label layoutX="21.0" text="MASTER PASSWORD">
+                           <font>
+                              <Font name="Segoe UI Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <CheckBox alignment="CENTER" contentDisplay="TOP" graphicTextGap="6.0" layoutX="20.0" layoutY="81.0" mnemonicParsing="false" text="Remember session" textFill="#c3c3c3" />
+                        <PasswordField fx:id="AuthTextField" layoutX="20.0" layoutY="24.0" prefHeight="54.0" prefWidth="391.0" promptText="Enter your key">
+                           <font>
+                              <Font name="Segoe UI" size="16.0" />
+                           </font>
+                        </PasswordField>
+                     </children>
+                  </Pane>
+                  <Label fx:id="validatorLabel" text="Invalid Password!" textFill="#c3c3c3">
+                     <VBox.margin>
+                        <Insets bottom="-20.0" left="-20.0" right="-20.0" top="-20.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font name="Segoe UI Italic" size="12.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="UnlockButton" mnemonicParsing="false" onAction="#switchToMenuScene" prefHeight="59.0" prefWidth="389.0" styleClass="unlock-button" text="Unlock Vault">
+                     <VBox.margin>
+                        <Insets top="30.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font name="Segoe UI Bold" size="14.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="forgotPasswordButton" mnemonicParsing="false" onAction="#switchToForgetPasswordScene" styleClass="forgot-password" text="Forgot Passowrd? → ">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                     <font>
+                        <Font name="Segoe UI" size="12.0" />
+                     </font>
+                  </Button>
                </children>
-            </Pane>
-            <Label fx:id="validatorLabel" text="Invalid Password!">
-               <VBox.margin>
-                  <Insets bottom="-20.0" left="-20.0" right="-20.0" top="-20.0" />
-               </VBox.margin>
-               <font>
-                  <Font name="Segoe UI Italic" size="12.0" />
-               </font>
-            </Label>
-            <Button fx:id="UnlockButton" mnemonicParsing="false" onAction="#switchToMenuScene" prefHeight="50.0" prefWidth="350.0" text="Unlock Vault">
-               <VBox.margin>
-                  <Insets top="10.0" />
-               </VBox.margin>
-               <font>
-                  <Font name="Segoe UI Bold" size="14.0" />
-               </font></Button>
-         </children></VBox>
-   </center>
-   <top>
-      <HBox alignment="CENTER_LEFT" prefHeight="47.0" prefWidth="419.0" BorderPane.alignment="CENTER">
-         <children>
-            <Label text="EntroPass">
-               <font>
-                  <Font name="Segoe UI Bold" size="25.0" />
-               </font>
-               <HBox.margin>
-                  <Insets left="15.0" />
-               </HBox.margin>
-            </Label>
-         </children>
-      </HBox>
-   </top>
-</BorderPane>
+            </VBox>
+         </center>
+         <top>
+            <HBox alignment="CENTER_LEFT" prefHeight="47.0" prefWidth="419.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label text="EntroPass" textFill="WHITE">
+                     <font>
+                        <Font name="Segoe UI Bold" size="25.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="15.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+         </top>
+      </BorderPane>
+   </children>
+</AnchorPane>

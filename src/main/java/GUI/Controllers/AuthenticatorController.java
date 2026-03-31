@@ -1,6 +1,7 @@
 package GUI.Controllers;
 
 import java.io.IOException;
+import java.util.Objects;
 
 import Encryption.AES;
 import Encryption.PDKF2;
@@ -32,6 +33,10 @@ public class AuthenticatorController {
     @FXML
     private Button UnlockButton;
 
+    @FXML
+    private Button forgotPasswordButton;
+
+
     private static final String HASHED_PASS = "$2a$12$yjGunLLYocir1U6fpY6tPOtJflUFG..wWVaLofXXMlDU8.81/USXW";
     SecretKey key = PDKF2.deriveKey(HASHED_PASS.toCharArray());
 
@@ -60,6 +65,17 @@ public class AuthenticatorController {
     @FXML
     private boolean validateLogIn() throws IOException {
         return ValidatePassword.checkPassword(AuthTextField.getText(), HASHED_PASS);
+    }
+
+    @FXML
+    void switchToForgetPasswordScene(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("/org/password_generator_gui/Scenes/ForgotPassword.fxml"));
+        Parent root = fxmlLoader.load();
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/org/password_generator_gui/stylesheets/ForgotPasswordStyleSheet.css")).toExternalForm());
+        stage.setScene(scene);
+        stage.show();
     }
 
     @FXML

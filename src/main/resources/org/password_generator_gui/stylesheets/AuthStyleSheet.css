@@ -1,17 +1,32 @@
 .text-field {
-    -fx-background-color: #d1ebd8;
+    -fx-background-color: #1e1e1e;
     -fx-background-radius: 10px;
     -fx-border-radius: 10px;
-    -fx-border-color: #376644; /* Optional: adds a visible border */
-    -fx-border-width: 1px;  /* Optional: sets border thickness */
     -fx-padding: 0.333333em 1em 0.333333em 1em; /* Adjust padding as needed */
     -fx-highlight-fill: transparent; /* Removes background color */
+    -fx-text-fill: #c3c3c3;
     -fx-highlight-text-fill: -fx-text-inner-color; /* Keeps text color */
 }
 
-.button {
-    -fx-border-color: #376644;
-    -fx-background-color: #d1ebd8;
-    -fx-background-radius: 15;
-    -fx-border-radius: 15;
+.auth-box {
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-background-color: #313131;
+}
+
+.root-pane {
+    -fx-background-image: url("../Icons/Images/Background.jpg");
+    -fx-background-size: cover;
+}
+
+.unlock-button {
+    -fx-background-color: #6dab5d;
+    -fx-background-radius: 25;
+    -fx-border-radius: 25;
+}
+
+.forgot-password {
+    -fx-background-color: clear;
+    -fx-border-color: clear;
+    -fx-text-fill: #c3c3c3;
 }
