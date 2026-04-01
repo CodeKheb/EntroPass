@@ -16,6 +16,8 @@ public class Configurator {
     private final boolean hasDigit;
     private final boolean hasSpecialChar;
     private final boolean hasMixedCase;
+    private final boolean hasLowerCase;
+    private final boolean hasUpperCase;
 
     /**
      * Makes the configuration of the password based on the user's preferences.
@@ -29,11 +31,27 @@ public class Configurator {
         this.hasDigit = hasDigit;
         this.hasSpecialChar = hasSpecialChar;
         this.hasMixedCase = mixedCase;
+        this.hasUpperCase = false;
+        this.hasLowerCase = false;
 
         if (hasDigit) rules.add(new CharacterRule(EnglishCharacterData.Digit));
         if (hasSpecialChar) rules.add(new CharacterRule(EnglishCharacterData.SpecialAscii));
         if (mixedCase) rules.add(new CharacterRule(EnglishCharacterData.Alphabetical));
         else rules.add(new CharacterRule(EnglishCharacterData.LowerCase));
+    }
+
+    public Configurator(boolean hasDigit, boolean hasSpecialChar, boolean hasLowerCase, boolean hasUppercase) {
+        rules = new ArrayList<>();
+        this.hasDigit = hasDigit;
+        this.hasSpecialChar = hasSpecialChar;
+        this.hasLowerCase = hasLowerCase;
+        this.hasUpperCase = hasUppercase;
+        this.hasMixedCase = false;
+
+        if (hasDigit) rules.add(new CharacterRule(EnglishCharacterData.Digit));
+        if (hasSpecialChar) rules.add(new CharacterRule(EnglishCharacterData.SpecialAscii));
+        if (hasLowerCase) rules.add(new CharacterRule(EnglishCharacterData.LowerCase));
+        if (hasUppercase) rules.add(new CharacterRule(EnglishCharacterData.UpperCase));
     }
 
     /**
@@ -45,4 +63,6 @@ public class Configurator {
     public boolean hasDigit() {return hasDigit;}
     public boolean hasSpecialChar() {return hasSpecialChar;}
     public boolean hasMixedCase() {return hasMixedCase;}
+    public boolean hasLowerCase() {return hasLowerCase;}
+    public boolean hasUpperCase() {return hasUpperCase;}
 }

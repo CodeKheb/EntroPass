@@ -130,7 +130,7 @@ public class BuilderController {
 
         passwordStrength.setText(
                 StrengthChecker.
-                checkStrength(strength)
+                checkGeneratedStrength(strength)
         );
 
         strengthIndicator.setProgress(strength);

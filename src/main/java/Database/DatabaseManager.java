@@ -49,7 +49,8 @@ public class DatabaseManager {
         connection = DriverManager.getConnection(url);
         String createMasterKeyDBQuery = """
                 CREATE TABLE IF NOT EXISTS master (
-                                hash TEXT NOT NULL)
+                                hash TEXT NOT NULL,
+                                salt TEXT NOT NULL)
                 """;
         String createVaultQuery = """
                 create table if not exists vault (

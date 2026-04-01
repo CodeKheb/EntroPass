@@ -27,7 +27,7 @@
                         <Font name="Segoe UI Bold" size="32.0" />
                      </font>
                      <VBox.margin>
-                        <Insets top="-10.0" />
+                        <Insets top="-35.0" />
                      </VBox.margin>
                   </Label>
                   <Label prefHeight="50.0" prefWidth="373.0" text="This key is your only way into your vault. We cannot recover it." textFill="#c2c7d0" wrapText="true">
@@ -46,7 +46,7 @@
                               <Font name="Segoe UI Bold" size="12.0" />
                            </font>
                         </Label>
-                        <PasswordField fx:id="AuthTextField" layoutX="29.0" layoutY="26.0" prefHeight="54.0" prefWidth="373.0" promptText="Enter your key">
+                        <PasswordField fx:id="masterykeyField" layoutX="29.0" layoutY="26.0" prefHeight="54.0" prefWidth="373.0" promptText="Enter your key">
                            <font>
                               <Font name="Segoe UI" size="16.0" />
                            </font>
@@ -62,7 +62,7 @@
                         <Insets top="15.0" />
                      </VBox.margin>
                   </Pane>
-                  <Button fx:id="UnlockButton" mnemonicParsing="false" onAction="#switchToMenuScene" prefHeight="59.0" prefWidth="373.0" styleClass="unlock-button" text="Create Vault">
+                  <Button fx:id="setKey" mnemonicParsing="false" onAction="#setMasterKey" prefHeight="59.0" prefWidth="373.0" styleClass="unlock-button" text="Create Vault">
                      <VBox.margin>
                         <Insets />
                      </VBox.margin>
@@ -107,14 +107,14 @@
             </ImageView>
          </children>
       </Group>
-      <Label layoutX="546.0" layoutY="240.0" text="EntroPass" textAlignment="CENTER" textFill="WHITE">
-         <font>
-            <Font name="Segoe UI Bold" size="30.0" />
-         </font>
-      </Label>
-      <Label layoutX="491.0" layoutY="283.0" text="SECURE DIGITAL GREENHOUSE" textAlignment="CENTER" textFill="#c2c7d0">
+      <Label layoutX="491.0" layoutY="285.0" text="SECURE DIGITAL GREENHOUSE" textAlignment="CENTER" textFill="#c2c7d0">
          <font>
             <Font name="Segoe UI Bold" size="17.0" />
+         </font>
+      </Label>
+      <Label layoutX="546.0" layoutY="239.0" text="EntroPass" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Segoe UI Bold" size="30.0" />
          </font>
       </Label>
    </children>
