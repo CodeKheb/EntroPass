@@ -3,9 +3,9 @@ package GUI.Controllers;
 import java.io.IOException;
 import java.util.Objects;
 
+import Database.MasterDAO;
 import Encryption.AES;
 import Encryption.PDKF2;
-import Encryption.ValidatePassword;
 import GUI.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,12 +19,11 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+import org.mindrot.jbcrypt.BCrypt;
 
 import javax.crypto.SecretKey;
 
 public class AuthenticatorController {
-
-    public Button signInButton;
 
     @FXML
     private PasswordField AuthTextField;
@@ -32,17 +31,8 @@ public class AuthenticatorController {
     @FXML
     private Label validatorLabel;
 
-    @FXML
-    private Button UnlockButton;
-
-    @FXML
-    private Button forgotPasswordButton;
-
-    @FXML
-    private Button signUpButton;
-
-    private static final String HASHED_PASS = "$2a$12$yjGunLLYocir1U6fpY6tPOtJflUFG..wWVaLofXXMlDU8.81/USXW";
-    SecretKey key = PDKF2.deriveKey(HASHED_PASS.toCharArray());
+    private static final String password = MasterDAO.retrieveMasterPass();
+    SecretKey key = PDKF2.deriveKey(password.toCharArray(), MasterDAO.retrieveSaltByte());
 
     public AuthenticatorController() throws Exception {
     }
@@ -67,8 +57,8 @@ public class AuthenticatorController {
     }
 
     @FXML
-    private boolean validateLogIn() throws IOException {
-        return ValidatePassword.checkPassword(AuthTextField.getText(), HASHED_PASS);
+    private boolean validateLogIn() {
+        return BCrypt.checkpw(AuthTextField.getText(), password);
     }
 
     @FXML

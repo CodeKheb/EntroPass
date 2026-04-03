@@ -49,6 +49,7 @@ public class DatabaseManager {
         connection = DriverManager.getConnection(url);
         String createMasterKeyDBQuery = """
                 CREATE TABLE IF NOT EXISTS master (
+                                id INTEGER PRIMARY KEY CHECK (id = 1),
                                 hash TEXT NOT NULL,
                                 salt TEXT NOT NULL)
                 """;

@@ -53,37 +53,4 @@ public class UserOperations {
         preparedStatement.executeUpdate();
         preparedStatement.close();
     }
-
-    public static void purgeVault() throws SQLException {
-        //Establish a connection first
-        Connection connection = DatabaseManager.getInstance().getConnection();
-
-        //Declare the vault table and the master table queries
-        String purgeVault = "delete from vault";
-        String purgeMaster = "delete from master";
-
-        try (Statement stmt = connection.createStatement()) {
-            stmt.execute(purgeVault);
-            stmt.execute(purgeMaster);
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void deletePassword(int id) {
-        // Establish a connection first
-        Connection connection = DatabaseManager.getInstance().getConnection();
-
-        // Declare the delete query
-        String sql = "DELETE FROM vault WHERE id = ?";
-
-        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            pstmt.setInt(1, id);
-            pstmt.executeUpdate();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 }

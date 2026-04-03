@@ -4,11 +4,11 @@ import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
+import java.security.SecureRandom;
+import java.util.Base64;
 
 public class PDKF2 {
-    private static final byte[] salt = "234567asdbd".getBytes(); //TODO: Replace with DB Salt
-
-    public static SecretKey deriveKey(char[] masterPassword) throws Exception {
+    public static SecretKey deriveKey(char[] masterPassword, byte[] salt) throws Exception {
         PBEKeySpec spec = new PBEKeySpec(
                 masterPassword,
                 salt,
@@ -20,7 +20,18 @@ public class PDKF2 {
         byte[] keyBytes = factory.generateSecret(spec).getEncoded();
 
         spec.clearPassword(); //wipe the password from memory
-
         return new SecretKeySpec(keyBytes, "AES");
+    }
+
+    private static byte[] generateSalt() {
+        byte[] salt = new byte[16];
+        new SecureRandom().nextBytes(salt);
+
+        return salt;
+    }
+
+    public static String getSalt() {
+        byte[] salt = generateSalt();
+        return Base64.getEncoder().encodeToString(salt);
     }
 }

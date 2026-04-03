@@ -28,14 +28,9 @@ import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-import static java.lang.Thread.sleep;
-
 public class VaultController implements Initializable {
     @FXML
     private Label itemAmountLabel;
-
-    @FXML
-    private Button BackButton;
 
     @FXML
     private Button copyPassword;
@@ -45,9 +40,6 @@ public class VaultController implements Initializable {
 
     @FXML
     private ImageView notesIcon;
-
-    @FXML
-    private ImageView copyIcon;
 
     @FXML
     private Label createdDate;
@@ -62,14 +54,10 @@ public class VaultController implements Initializable {
     private TextField serviceName;
 
     @FXML
-    private Label serviceName1;
-
-    @FXML
     private TextField userName;
 
     @FXML
     private ListView<User> userRepoList;
-
     private final UserDAO userDAO = new UserDAO();
 
     @Override
@@ -118,7 +106,7 @@ public class VaultController implements Initializable {
     }
 
     @FXML
-    private void copyPassword() throws InterruptedException {
+    private void copyPassword() {
         Clipboard clipboard = Clipboard.getSystemClipboard();
         ClipboardContent content = new ClipboardContent();
 
@@ -130,7 +118,7 @@ public class VaultController implements Initializable {
     }
 
     @FXML
-    private void copyUsername() throws InterruptedException {
+    private void copyUsername() {
         Clipboard clipboard = Clipboard.getSystemClipboard();
         ClipboardContent content = new ClipboardContent();
 

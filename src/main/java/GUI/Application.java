@@ -1,6 +1,7 @@
 package GUI;
 
 import Database.DatabaseManager;
+import Database.MasterDAO;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Region;
@@ -14,16 +15,32 @@ import java.util.Objects;
 public class Application extends javafx.application.Application {
     @Override
     public void start(Stage stage) throws IOException {
-        try {
-            DatabaseManager.getInstance().initDatabase();
-            FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("/org/password_generator_gui/Scenes/AuthMenu.fxml"));
-            Region root = fxmlLoader.load();
-            Scene scene = new Scene(root);
-            stage.setTitle("EntroPass 0.67");
-            stage.setScene(scene);
-            stage.show();
-        }catch (Exception e) {
-            e.printStackTrace();
+        boolean masterPasswordExist = MasterDAO.retrieveMasterPass() != null;
+        if (masterPasswordExist) {
+            try {
+                DatabaseManager.getInstance().initDatabase();
+                FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("/org/password_generator_gui/Scenes/AuthMenu.fxml"));
+                Region root = fxmlLoader.load();
+                Scene scene = new Scene(root);
+                stage.setTitle("EntroPass 0.67");
+                stage.setScene(scene);
+                stage.show();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        else {
+            try {
+                DatabaseManager.getInstance().initDatabase();
+                FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("/org/password_generator_gui/Scenes/SignUpScene.fxml"));
+                Region root = fxmlLoader.load();
+                Scene scene = new Scene(root);
+                stage.setTitle("EntroPass 0.67");
+                stage.setScene(scene);
+                stage.show();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 

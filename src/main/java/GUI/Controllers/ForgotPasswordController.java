@@ -1,5 +1,8 @@
 package GUI.Controllers;
 
+import Database.DatabaseOperations;
+import Database.User;
+import Database.UserDAO;
 import Database.UserOperations;
 import GUI.Application;
 import javafx.event.ActionEvent;
@@ -10,6 +13,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -25,21 +29,28 @@ public class ForgotPasswordController {
     private Button cancelButton;
 
     @FXML
+    private Label storedAssetsCounter;
+
+    @FXML
     private Button resetButton;
 
-    void initialize() {
+    UserDAO userDAO = new UserDAO();
+
+    private void initialize() {
         // Prevents the player from clicking reset if the checkbox was not clicked
         resetButton.disableProperty().bind(acknowledgementCheckbox.selectedProperty().not());
+        storedAssetsCounter.setText(String.valueOf(userDAO.getRowCount()));
     }
 
     @FXML
-    void resetVault(ActionEvent event) throws SQLException {
-        UserOperations.purgeVault();
+    void resetVault(ActionEvent event) throws SQLException, IOException {
+        DatabaseOperations.purgeDB();
+        switchToAuthScene(event);
     }
 
     @FXML
     void switchToAuthScene(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("/org/password_generator_gui/Scenes/AuthMenu.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("/org/password_generator_gui/Scenes/SignUPScene.fxml"));
         Parent root = fxmlLoader.load();
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);

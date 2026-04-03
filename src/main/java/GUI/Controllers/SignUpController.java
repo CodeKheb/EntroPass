@@ -1,5 +1,9 @@
 package GUI.Controllers;
 
+import Database.DatabaseManager;
+import Database.DatabaseOperations;
+import Database.MasterDAO;
+import Encryption.PDKF2;
 import GUI.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -8,22 +12,28 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.ProgressBar;
 import javafx.stage.Stage;
 import org.Password_Generator.Configurator;
 import org.Password_Generator.StrengthChecker;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Objects;
 
 public class SignUpController {
 
     @FXML
+    private Label signInWarning;
+
+    @FXML
     private ProgressBar masterKeyStrength;
 
     @FXML
-    private PasswordField masterykeyField;
+    private PasswordField masterPasswordField;
 
     @FXML
     private Button setKey;
@@ -33,32 +43,52 @@ public class SignUpController {
 
     @FXML
     public void initialize() {
-        masterykeyField.textProperty().addListener((observable, oldValue, newValue) -> {
-            double entropy = StrengthChecker.getStrength(getConfiguration(getMasterKey()), getMasterKeyLength());
+        signInWarning.setVisible(false);
+
+        masterPasswordField.setOnMouseClicked(event -> {
+            signInWarning.setVisible(false);
+        });
+
+        masterPasswordField.textProperty().addListener((observable, oldValue, newValue) -> {
+            double entropy = StrengthChecker.getStrength(getConfiguration(getMasterPass()), getMasterKeyLength());
             double strength = StrengthChecker.checkStrength(entropy);
             masterKeyStrength.setProgress(strength);
         });
     }
 
     @FXML
-    void setMasterKey(ActionEvent event) {
+    private void insertIntoDB() throws SQLException {
+        boolean invalidPassword = getMasterPass().isEmpty();
+        String salt = PDKF2.getSalt();
 
+        if (!invalidPassword) {
+            DatabaseOperations.insertToMasterDB(getHashedMasterPass(), salt);
+            masterPasswordField.clear();
+            masterPasswordField.setPromptText("MASTER PASSWORD SAVED SUCCESSFULLY");
+        }
+        else masterPasswordField.setPromptText("MASTER PASSWORD CANNOT BE EMPTY");
     }
 
     @FXML
     void switchToSignInScene(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("/org/password_generator_gui/Scenes/AuthMenu.fxml"));
-        Parent root = fxmlLoader.load();
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/org/password_generator_gui/stylesheets/AuthStyleSheet.css")).toExternalForm());
-        stage.setScene(scene);
-        stage.show();
+        boolean masterPasswordExists = MasterDAO.retrieveMasterPass() != null;
+
+        if (masterPasswordExists) {
+            FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("/org/password_generator_gui/Scenes/AuthMenu.fxml"));
+            Parent root = fxmlLoader.load();
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/org/password_generator_gui/stylesheets/AuthStyleSheet.css")).toExternalForm());
+            stage.setScene(scene);
+            stage.show();
+        }
+        else signInWarning.setVisible(true);
     }
 
     //getter methods
-    private String getMasterKey() { return masterykeyField.getText();}
-    private int getMasterKeyLength() {return masterykeyField.getLength();}
+    private String getHashedMasterPass() { return BCrypt.hashpw(masterPasswordField.getText(), BCrypt.gensalt());}
+    private String getMasterPass() { return masterPasswordField.getText();}
+    private int getMasterKeyLength() {return masterPasswordField.getLength();}
     private Configurator getConfiguration(String masterKey) {
         boolean hasLower   = masterKey.matches(".*[a-z].*");
         boolean hasUpper   = masterKey.matches(".*[A-Z].*");
@@ -68,7 +98,7 @@ public class SignUpController {
         return new Configurator(hasNumbers, hasSymbols, hasUpper, hasLower);
     }
 
-    public void switchToMenuScene(ActionEvent actionEvent) {
-
+    public void setMasterKey(ActionEvent actionEvent) throws SQLException {
+        insertIntoDB();
     }
 }

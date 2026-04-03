@@ -20,7 +20,7 @@ public class MenuController {
     private Button ViewSavedPassword;
 
     @FXML
-    public void switchToPasswordBuilder(ActionEvent event) throws IOException {
+    void switchToPasswordBuilder(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("/org/password_generator_gui/Scenes/PasswordBuilder.fxml"));
         Parent root = fxmlLoader.load();
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -30,7 +30,7 @@ public class MenuController {
     }
 
     @FXML
-    public void switchToPasswordVault(ActionEvent event) throws IOException {
+    void switchToPasswordVault(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("/org/password_generator_gui/Scenes/PasswordVault.fxml"));
         Parent root = fxmlLoader.load();
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
