@@ -19,7 +19,7 @@ public class SceneUtils {
         FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource(fxmlSourceRoot));
         Parent root = fxmlLoader.load();
         Scene scene = new Scene(root);
-        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource(cssSourceRoot)).toExternalForm());
+        scene.getStylesheets().add(Objects.requireNonNull(SceneUtils.class.getResource(cssSourceRoot)).toExternalForm());
         stage.setScene(scene);
         stage.show();
     }

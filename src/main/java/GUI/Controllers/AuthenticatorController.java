@@ -68,7 +68,7 @@ public class AuthenticatorController {
 
     @FXML
     private void switchToSignUpScene(ActionEvent event) throws IOException {
-        String fxmlFileName = "SignUpScnee.fxml";
+        String fxmlFileName = "SignUpScene.fxml";
         String cssFileName = "SignUpStyleSheet.css";
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -102,9 +102,10 @@ public class AuthenticatorController {
      */
     private void switchToMenuScene(Node source) throws Exception {
         boolean validLogin = BCrypt.checkpw(AuthTextField.getText(), password);
+        char[] masterPassword = AuthTextField.getText().toCharArray();
 
         if (validLogin) {
-            SecretKey key = PDKF2.deriveKey(password.toCharArray(), MasterDAO.retrieveSaltByte());
+            SecretKey key = PDKF2.deriveKey(masterPassword, MasterDAO.retrieveSaltByte());
             System.out.println(Arrays.toString(MasterDAO.retrieveSaltByte()));
             String fxmlFileName = "StartingMenu.fxml";
             String cssFileName = "StartingMenuStyleSheet.css";

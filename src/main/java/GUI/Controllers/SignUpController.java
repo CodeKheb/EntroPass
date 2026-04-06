@@ -75,8 +75,8 @@ public class SignUpController {
     @FXML
     void switchToSignInScene(ActionEvent event) throws IOException {
         boolean masterPasswordExists = MasterDAO.retrieveMasterPass() != null;
-        String fxmlFile = "PasswordBuilder.fxml";
-        String cssFile = "BuilderStyleSheet.css";
+        String fxmlFile = "AuthMenu.fxml";
+        String cssFile = "AuthStyleSheet.css";
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
@@ -96,7 +96,6 @@ public class SignUpController {
 
         return new Configurator(hasNumbers, hasSymbols, hasUpper, hasLower);
     }
-
     public void setMasterKey(ActionEvent event) throws SQLException, IOException {
         insertIntoDB(event);
     }
