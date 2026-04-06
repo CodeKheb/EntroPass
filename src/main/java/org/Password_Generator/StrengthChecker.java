@@ -22,7 +22,7 @@ public class StrengthChecker {
      * @param passwordLength the length of the password
      * @return the entropy of the password generated
      */
-    public static double getStrength(Configurator config, int passwordLength) {
+    public static double getEntropy(Configurator config, int passwordLength) {
         int charPoolSize = 0;
 
         final int DIGIT_POOL_SIZE = 10;
@@ -53,10 +53,7 @@ public class StrengthChecker {
         final double STRONG_THRESHOLD = 0.50;
         final double MEDIUM_THRESHOLD = 0.25;
 
-        final double MIN_ENTROPY = 37.60351774512874;
-        final double MAX_ENTROPY = 419.4936865073688;
-
-        double normalizedStrength = (initialEntropy - MIN_ENTROPY)/(MAX_ENTROPY - MIN_ENTROPY);
+        double normalizedStrength = getNormalizedValue(initialEntropy);
 
         if (normalizedStrength >= VERY_STRONG_THRESHOLD) return "Very Strong";
         else if (normalizedStrength >= STRONG_THRESHOLD) return "Strong";
@@ -64,6 +61,7 @@ public class StrengthChecker {
         else return "Weak";
     }
 
+    //For the master password
     public static double checkStrength(double entropyBits) {
         if (entropyBits >= 128) return (double) 100 /100;
         else if (entropyBits >= 60) return (double) 75/100;
@@ -78,8 +76,15 @@ public class StrengthChecker {
      */
     private static double log2(int n) {
         if (n <= 0) {
-            throw new IllegalArgumentException("n must be positive");
+            n = 1; //prevents n being equal to 0.
         }
         return Math.log(n) / Math.log(2);
+    }
+
+    public static double getNormalizedValue(double initialEntropy) {
+        final double MIN_ENTROPY = 36.60351774512874;
+        final double MAX_ENTROPY = 419.4936865073688;
+
+        return (initialEntropy - MIN_ENTROPY)/(MAX_ENTROPY - MIN_ENTROPY);
     }
 }

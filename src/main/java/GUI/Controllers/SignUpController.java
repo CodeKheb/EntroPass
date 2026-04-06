@@ -1,17 +1,12 @@
 package GUI.Controllers;
 
-import Database.DatabaseManager;
 import Database.DatabaseOperations;
 import Database.MasterDAO;
 import Encryption.PDKF2;
-import GUI.Application;
 import GUI.Utils.SceneUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -19,12 +14,10 @@ import javafx.scene.control.ProgressBar;
 import javafx.stage.Stage;
 import org.Password_Generator.Configurator;
 import org.Password_Generator.StrengthChecker;
-import org.controlsfx.control.action.Action;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Objects;
 
 public class SignUpController {
 
@@ -52,7 +45,7 @@ public class SignUpController {
         });
 
         masterPasswordField.textProperty().addListener((observable, oldValue, newValue) -> {
-            double entropy = StrengthChecker.getStrength(getConfiguration(getMasterPass()), getMasterKeyLength());
+            double entropy = StrengthChecker.getEntropy(getConfiguration(getMasterPass()), getMasterKeyLength());
             double strength = StrengthChecker.checkStrength(entropy);
             masterKeyStrength.setProgress(strength);
         });

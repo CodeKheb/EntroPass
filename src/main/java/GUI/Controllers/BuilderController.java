@@ -2,14 +2,10 @@ package GUI.Controllers;
 
 import Database.UserOperations;
 import Encryption.AES;
-import GUI.Application;
 import GUI.Utils.SceneUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import org.Password_Generator.Configurator;
@@ -126,14 +122,16 @@ public class BuilderController {
 
     @FXML
     private void setPasswordStrength(Configurator configuration, int passwordLength) {
-        double strength = StrengthChecker.getStrength(configuration, passwordLength);
+        double entropyBits = StrengthChecker.getEntropy(configuration, passwordLength);
+        double normalizedStrength = StrengthChecker.getNormalizedValue(entropyBits);
+
 
         passwordStrength.setText(
                 StrengthChecker.
-                checkGeneratedStrength(strength)
+                checkGeneratedStrength(entropyBits)
         );
 
-        strengthIndicator.setProgress(strength);
+        strengthIndicator.setProgress(normalizedStrength);
     }
 
     @FXML
