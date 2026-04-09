@@ -122,7 +122,7 @@ public class BuilderController {
 
     @FXML
     private void setPasswordStrength(Configurator configuration, int passwordLength) {
-        double entropyBits = StrengthChecker.getEntropy(configuration, passwordLength);
+        double entropyBits = StrengthChecker.getGeneratorEntropy(configuration, passwordLength);
         double normalizedStrength = StrengthChecker.getNormalizedValue(entropyBits);
 
 
@@ -131,6 +131,9 @@ public class BuilderController {
                 checkGeneratedStrength(entropyBits)
         );
 
+        //TODO: fix bug where if checkboxes are not chosen it doesn't evaluate the strength even with max length.
+        System.out.println(normalizedStrength);
+        System.out.println(entropyBits);
         strengthIndicator.setProgress(normalizedStrength);
     }
 
