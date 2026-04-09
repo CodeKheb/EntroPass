@@ -42,19 +42,16 @@ public class VaultController implements Initializable {
     private Button copyUsername;
 
     @FXML
-    private ImageView notesIcon;
-
-    @FXML
     private Label createdDate;
 
     @FXML
-    private TextField notes;
+    private TextArea notes;
 
     @FXML
     private PasswordField password;
 
     @FXML
-    private TextField serviceName;
+    private Label serviceName;
 
     @FXML
     private TextField userName;
@@ -84,7 +81,6 @@ public class VaultController implements Initializable {
         });
 
         userRepoList.getSelectionModel().selectFirst();
-        notesIcon.setImage(new Image(Objects.requireNonNull(getClass().getResource("/org/Assets/Images/noteIcon.png")).toExternalForm()));
 
         itemAmountLabel.setText(String.valueOf(userDAO.getRowCount()));
     }
@@ -151,8 +147,8 @@ public class VaultController implements Initializable {
         content.putString(password.getText());
         clipboard.setContent(content);
 
-        copyPassword.setText("copied to clipboard!");
-        copyUsername.setText("copy to clipboard");
+        copyPassword.setText("Copied!");
+        copyUsername.setText("Copy");
     }
 
     @FXML
@@ -163,7 +159,7 @@ public class VaultController implements Initializable {
         content.putString(userName.getText());
         clipboard.setContent(content);
 
-        copyUsername.setText("copied to clipboard!");
-        copyPassword.setText("copy to clipboard");
+        copyUsername.setText("Copied!");
+        copyPassword.setText("Copy");
     }
 }

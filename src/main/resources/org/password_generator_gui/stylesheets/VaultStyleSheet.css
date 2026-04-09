@@ -1,19 +1,152 @@
-.list-cell:filled:selected {
-    -fx-background-color: #D1EBD8FF; /* Use your desired color or hex code */
+/* The default state of the cell */
+.list-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: #8a8d91; /* Muted grey for unselected text */
+    -fx-padding: 10 15;
+}
+
+/* Hover state: Subtle dark grey highlight */
+.list-cell:filled:hover {
+    -fx-background-color: #1e2124;
     -fx-text-fill: white;
 }
 
-.list-cell:filled:hover {
-    -fx-background-color: #cfded2;
-}
-.list-cell:filled:selected .text {
-    -fx-fill: white;
-}
+/* Selected state (Focused): Dark charcoal with the Lime Green left border */
 .list-view:focused .list-cell:filled:selected {
-    -fx-background-color: #D1EBD8FF; /* A different color for unfocused state */
+    -fx-background-color: #2a2d32;
+    -fx-text-fill: #b4f13b; /* Lime green text for the title */
+    -fx-border-color: #b4f13b;
+    -fx-border-width: 0 0 0 4; /* Top, Right, Bottom, Left (4px lime bar) */
 }
 
-.search-bar {
+/* Selected state (Unfocused): Keeps the background but dims the accent */
+.list-cell:filled:selected {
+    -fx-background-color: #2a2d32;
+    -fx-text-fill: #b4f13b;
+    -fx-border-color: #5a7a1d; /* Dimmer green when not focused */
+    -fx-border-width: 0 0 0 4;
+}
+
+/* Specific fix for text color inside selected cells */
+.list-cell:filled:selected .text {
+    -fx-fill: #b4f13b;
+}
+
+/* Base styles for the labels inside the cell */
+.cell-title {
+    -fx-font-weight: bold;
+    -fx-font-size: 13px;
+    -fx-text-fill: #e0e0e0; /* Default off-white */
+}
+
+.cell-subtitle {
+    -fx-font-size: 11px;
+    -fx-text-fill: #8a8d91; /* Default muted gray */
+}
+
+/* When the CELL is selected, change the colors of the LABELS inside it */
+.list-cell:filled:selected .cell-title {
+    -fx-text-fill: #b4f13b; /* Lime green when selected */
+}
+
+.list-cell:filled:selected .cell-subtitle {
+    -fx-text-fill: #a0a0a0; /* Slightly brighter gray so it's readable on the dark selection */
+}
+
+/* Hover effect for labels */
+.list-cell:filled:hover .cell-title {
+    -fx-text-fill: white;
+}
+
+.list-view {
+    -fx-background-insets: 0;
+    -fx-vertical-gap: 10;
+    -fx-background-color: transparent;
+}
+
+.list-container {
+    -fx-background-color: #353535;
+    -fx-padding: 20;
+}
+
+.root-textfield {
     -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-background-color: #272727;
+    -fx-text-fill: #404040;
+    -fx-padding: 10;
+    -fx-font: Semibold 16px "Segoe UI";
+}
+
+.side-bar {
+    -fx-background-color: #3c3c3c;
+}
+
+/* 1. Target the main control container */
+.notes-area {
+    -fx-background-color: #272727; /* Darker grey from your design */
+    -fx-text-fill: white;
+    -fx-border-color: #2a2d32;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-padding: 10;
+}
+
+.copy-button {
     -fx-background-color: #D1EBD8FF;
+    -fx-border-color: #2a2d32;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-text-fill: #272727;
+    -fx-padding: 5;
+    -fx-cursor: hand;
+}
+
+/* 2. Target the actual scroll pane viewport inside */
+.notes-area .viewport {
+    -fx-background-color: transparent;
+}
+
+/* 3. Target the text content area (Crucial step!) */
+.notes-area .content {
+    -fx-background-color: transparent;
+}
+
+/* 4. Optional: Style the text inside */
+.notes-area .text {
+    -fx-fill: #8a8d91; /* Muted text color for notes */
+}
+
+.side-bar-button {
+    --border-color: transparent;
+    -fx-background-color: transparent;
+    -fx-font: Semibold 20px "Segoe UI";
+    -fx-text-fill: #C2C7D0;
+}
+
+.side-bar-button:hover {
+    -fx-background-color: #454545;
+    -fx-text-fill: white;
+    -fx-border-color: #454545;
+    -fx-border-width: 0 0 0 5;
+    -fx-padding: 0 0 0 10;
+    -fx-cursor: hand;
+    -fx-border-radius: 0;
+    -fx-background-radius: 0;
+}
+
+.root-credential-container {
+    -fx-background-color: #191919;
+    -fx-padding: 40;
+    -fx-spacing: 25;
+}
+
+.credential-container {
+    -fx-background-radius: 20;
+    -fx-background-color: #353535;
+    -fx-padding: 25;
+}
+
+.root-text {
+    -fx-text-fill: #C2C7D0;
 }

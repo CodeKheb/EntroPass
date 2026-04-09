@@ -12,9 +12,14 @@ public class VaultEntryCell extends ListCell<User> {
     private final VBox layout = new VBox(2, serviceName, userName);
 
     public VaultEntryCell() {
-        serviceName.setStyle("-fx-font-weight: bold; -fx-font-size: 13");
-        userName.setStyle("-fx-text-fill: gray; -fx-font-size: 11");
-        layout.setPadding(new Insets(5, 10, 5, 10));
+        // Remove any .setStyle calls that set colors!
+        serviceName.getStyleClass().add("cell-title");
+        userName.getStyleClass().add("cell-subtitle");
+
+        // Layout-only settings are fine in Java
+        layout.setSpacing(2);
+        layout.setPadding(new Insets(8, 12, 8, 12));
+        VBox.setMargin(userName, new Insets(0, 0, 0, 12));
     }
 
     @Override
