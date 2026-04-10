@@ -44,6 +44,15 @@
     -fx-text-fill: #8a8d91; /* Default muted gray */
 }
 
+/* Force default text-node color to avoid fallback-to-black during cell reuse */
+.list-cell:filled .cell-title .text {
+    -fx-fill: #e0e0e0;
+}
+
+.list-cell:filled .cell-subtitle .text {
+    -fx-fill: #8a8d91;
+}
+
 /* When the CELL is selected, change the colors of the LABELS inside it */
 .list-cell:filled:selected .cell-title {
     -fx-text-fill: #b4f13b; /* Lime green when selected */
@@ -53,9 +62,25 @@
     -fx-text-fill: #a0a0a0; /* Slightly brighter gray so it's readable on the dark selection */
 }
 
+.list-cell:filled:selected .cell-title .text {
+    -fx-fill: #b4f13b;
+}
+
+.list-cell:filled:selected .cell-subtitle .text {
+    -fx-fill: #a0a0a0;
+}
+
 /* Hover effect for labels */
 .list-cell:filled:hover .cell-title {
     -fx-text-fill: white;
+}
+
+.list-cell:filled:hover .cell-title .text {
+    -fx-fill: white;
+}
+
+.list-cell:filled:hover .cell-subtitle .text {
+    -fx-fill: #c7c9cc;
 }
 
 .list-view {
@@ -65,7 +90,7 @@
 }
 
 .list-container {
-    -fx-background-color: #353535;
+    -fx-background-color: #303030;
     -fx-padding: 20;
 }
 
@@ -102,17 +127,14 @@
     -fx-cursor: hand;
 }
 
-/* 2. Target the actual scroll pane viewport inside */
 .notes-area .viewport {
     -fx-background-color: transparent;
 }
 
-/* 3. Target the text content area (Crucial step!) */
 .notes-area .content {
     -fx-background-color: transparent;
 }
 
-/* 4. Optional: Style the text inside */
 .notes-area .text {
     -fx-fill: #8a8d91; /* Muted text color for notes */
 }
@@ -124,15 +146,21 @@
     -fx-text-fill: #C2C7D0;
 }
 
+.side-bar-button-selected {
+    -fx-background-color: #818876;
+    -fx-text-fill: #b4f13b;
+    -fx-background-radius: 5;
+}
+
 .side-bar-button:hover {
     -fx-background-color: #454545;
+    -fx-background-radius: 5;
     -fx-text-fill: white;
     -fx-border-color: #454545;
     -fx-border-width: 0 0 0 5;
     -fx-padding: 0 0 0 10;
     -fx-cursor: hand;
     -fx-border-radius: 0;
-    -fx-background-radius: 0;
 }
 
 .root-credential-container {

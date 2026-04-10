@@ -9,19 +9,16 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.Objects;
 
-public class MenuController {
-    @FXML
-    private Button GenerateNewPassword;
-    @FXML
-    private Button ViewSavedPassword;
+public class MenuController {;
 
     @FXML
-    void switchToPasswordBuilder(ActionEvent event) throws IOException {
+    void switchToPasswordBuilder(MouseEvent event) throws IOException {
         String fxmlFile = "PasswordBuilder.fxml";
         String cssFile = "BuilderStyleSheet.css";
 
@@ -31,7 +28,7 @@ public class MenuController {
     }
 
     @FXML
-    void switchToPasswordVault(ActionEvent event) throws IOException {
+    void switchToPasswordVault(MouseEvent event) throws IOException {
         String fxmlFile = "PasswordVault.fxml";
         String cssFile = "VaultStyleSheet.css";
 

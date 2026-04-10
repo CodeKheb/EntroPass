@@ -1,0 +1,31 @@
+.Main-Pane {
+    -fx-background-color: #191919;
+    -fx-background-repeat: no-repeat;
+    -fx-padding: 40 ;
+}
+
+.menu-button {
+    -fx-border-color: transparent;
+    -fx-background-color: #3c3c3c;
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+    -fx-padding: 30;
+}
+
+.menu-button:hover {
+    -fx-border-color: transparent;
+    -fx-cursor: hand;
+    -fx-border-radius: 20;
+    -fx-background-radius: 20;
+    -fx-background-color: #454545;
+    -fx-padding: 30;
+    -fx-text-fill: white;
+    -fx-border-width: 0 0 0 5;
+}
+
+.icon {
+    -fx-text-fill: #b4f13b;
+    -fx-background-color: #818876;
+    -fx-background-radius: 10;
+    -fx-padding: 10;
+}
