@@ -15,7 +15,7 @@
 
 ### Password Storage
 - **SQLite Database**: Local storage for generated passwords
-- **BCrypt Encryption**: Industry-standard password hashing with a cost factor of 12
+- **AES-256-GCM Encryption**: Industry-standard password hashing with a cost factor of 12
 - **Organized Storage**: Save passwords with associated metadata:
   - Service name
   - Username
